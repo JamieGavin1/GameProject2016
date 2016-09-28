@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986080355662b1d4ba3261ba3a8bde83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fov: 150
+  fov: 120
 --- !u!1 &1326173282
 GameObject:
   m_ObjectHideFlags: 0
