@@ -4,6 +4,13 @@ using System.Collections;
 public class ShipMovement : MonoBehaviour
 {
 	public float movementSpeed = 1.0f;
+	public int width;
+	public int height;
+	void Start ()
+	{
+		Vector3 minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+		Vector3 maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+	}
 
 	// Update is called once per frame
 	void Update ()
@@ -16,15 +23,13 @@ public class ShipMovement : MonoBehaviour
 		transform.rotation = Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation
 		                                              (finalDirection),Mathf.Deg2Rad*30.0f);
 
+		float widthRel = width / (Screen.width);
+		float heightRel= height /(Screen.height); 
 
-		if (transform.position.x <= -7.5f)
-			transform.position = new Vector3(-7.5f, transform.position.y, transform.position.z);
-		else if (transform.position.x >=7.5f)
-			transform.position = new Vector3(7.5f, transform.position.y, transform.position.z);
-		else if (transform.position.y <= -7.5f)
-			transform.position = new Vector3(transform.position.x, -7.5f, transform.position.z);
-		else if (transform.position.y >=7.5f)
-			transform.position = new Vector3(transform.position.x, 7.5f, transform.position.z);
-		
+		Vector3 viewPos = Camera.main.WorldToViewportPoint (this.transform.position);
+		viewPos.x = Mathf.Clamp(viewPos.x, widthRel, 1-widthRel);
+		viewPos.y = Mathf.Clamp(viewPos.y, heightRel, 1-heightRel);
+		this.transform.position = Camera.main.ViewportToWorldPoint (viewPos);
+
 	}
 }
